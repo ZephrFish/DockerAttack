@@ -39,7 +39,7 @@ RUN mkdir /usr/share/tools/
 RUN mkdir /usr/share/tools/NetSeg/
 RUN git clone https://github.com/commonexploits/vlan-hopping /usr/share/tools/NetSeg/
 RUN mkdir /usr/share/tools/BuildReview/
-RUN wget https://raw.githubusercontent.com/ZephrFish/RandomScripts/master/UbuntuBR.sh  -O /usr/share/tools/BuildReview/
+RUN wget https://raw.githubusercontent.com/ZephrFish/RandomScripts/master/UbuntuBR.sh  -O /usr/share/tools/BuildReview/UbntBR.sh
 
 # Pull down prettifier scripts
 RUN mkdir /usr/share/tools/reporting
