@@ -43,12 +43,13 @@ RUN wget https://raw.githubusercontent.com/ZephrFish/RandomScripts/master/Ubuntu
 
 # Pull down prettifier scripts
 RUN mkdir /usr/share/tools/reporting
-RUN git clone https://github.com/cornerpirate/ReportCompiler /usr/share/tools/reporting/
-RUN git clone https://github.com/cornerpirate/nmap-summariser /usr/share/tools/reporting/
+RUN cd /usr/share/tools/reporting
+RUN git clone https://github.com/cornerpirate/ReportCompiler 
+RUN git clone https://github.com/cornerpirate/nmap-summariser 
 
 # Wordlists
 RUN mkdir /usr/share/tools/wordlists/
-RUN git clone https://github.com/danielmiessler/SecLists /usr/share/tools/wordlists
+RUN git clone https://github.com/danielmiessler/SecLists /usr/share/tools/wordlists/
 RUN git clone https://github.com/danielmiessler/RobotsDisallowed  /usr/share/tools/wordlists/
 
 # Set entrypoint and working directory
