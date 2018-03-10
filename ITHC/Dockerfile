@@ -23,6 +23,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  sslscan \
  wordlists \
  tmux \ 
+ python \
  thc-ipv6 
 
 # Create known_hosts for git cloning
@@ -39,9 +40,14 @@ RUN git clone https://github.com/commonexploits/vlan-hopping /usr/share/tools/Ne
 RUN mkdir /usr/share/tools/BuildReview/
 RUN wget https://raw.githubusercontent.com/ZephrFish/RandomScripts/master/UbuntuBR.sh  -O /usr/share/tools/BuildReview/
 
+# Pull down prettifier scripts
+RUN mkdir /usr/share/tools/reporting
+RUN git clone https://github.com/cornerpirate/ReportCompiler /usr/share/tools/reporting/
+RUN git clone https://github.com/cornerpirate/nmap-summariser /usr/share/tools/reporting/
+
 # Wordlists
 RUN mkdir /usr/share/tools/wordlists/
 RUN git clone https://github.com/danielmiessler/SecLists /usr/share/tools/wordlists
 RUN git clone https://github.com/danielmiessler/RobotsDisallowed  /usr/share/tools/wordlists/
 
-# WIP
+
