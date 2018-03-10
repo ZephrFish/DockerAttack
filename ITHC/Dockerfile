@@ -27,6 +27,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  thc-ipv6 
 
 # Create known_hosts for git cloning
+RUN mkdir /root/.ssh/
 RUN touch /root/.ssh/known_hosts
 # Add host keys
 RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
