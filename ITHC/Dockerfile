@@ -50,4 +50,9 @@ RUN mkdir /usr/share/tools/wordlists/
 RUN git clone https://github.com/danielmiessler/SecLists /usr/share/tools/wordlists
 RUN git clone https://github.com/danielmiessler/RobotsDisallowed  /usr/share/tools/wordlists/
 
+# Set entrypoint and working directory
+WORKDIR /root/
 
+# Expose the Key ports
+# Web Ports for Fun
+EXPOSE 80/tcp 443/tcp 8080/tcp
