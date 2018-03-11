@@ -21,7 +21,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  wordlists
 
 # Make Attacky things
-RUN mkdir /usr/share/tools && cd /usr/share/tools
+RUN mkdir /usr/share/tools/ && cd /usr/share/tools/
 RUN git clone https://github.com/trustedsec/hate_crack
 RUN git clone https://github.com/EmpireProject/Empire
 RUN git clone https://github.com/byt3bl33d3r/DeathStar
