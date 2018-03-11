@@ -19,6 +19,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  minicom \
  nasm \
  nmap \
+ yersinia \
  sqlmap \
  sslscan \
  wordlists \
