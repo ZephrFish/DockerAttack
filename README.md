@@ -1,6 +1,8 @@
 # DockerAttack
 Various Tools and Docker Images
 
+If you're unsure what docker is or where to start, check out this blog on [Docker for Hackers](https://www.pentestpartners.com/security-blog/docker-for-hackers-a-pen-testers-guide/) by [m0rv4i](https://twitter.com/RobJBone).
+
 # Outcomes
 
 - Deployable Pentesting Images for Various Jobs
