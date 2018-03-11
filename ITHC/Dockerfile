@@ -21,6 +21,8 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  nmap \
  yersinia \
  tshark \
+ arp-scan \ 
+ ethtool \
  vlan \
  sqlmap \
  sslscan \
