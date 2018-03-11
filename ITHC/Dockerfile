@@ -49,8 +49,9 @@ RUN git clone https://github.com/cornerpirate/nmap-summariser
 
 # Wordlists
 RUN mkdir /usr/share/tools/wordlists/
-RUN git clone https://github.com/danielmiessler/SecLists /usr/share/tools/wordlists/
-RUN git clone https://github.com/danielmiessler/RobotsDisallowed  /usr/share/tools/wordlists/
+RUN cd /usr/share/tools/wordlists/
+RUN git clone https://github.com/danielmiessler/SecLists 
+RUN git clone https://github.com/danielmiessler/RobotsDisallowed  
 
 # Set entrypoint and working directory
 WORKDIR /root/
