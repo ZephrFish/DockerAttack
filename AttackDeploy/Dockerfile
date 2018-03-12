@@ -15,10 +15,10 @@ RUN mkdir /usr/share/tools/scripts/
 
 # Pull Wordlists
 RUN cd /usr/share/wordlists/
-RUN git clone https://github.com/danielmiessler/SecLists.git 
+RUN git clone https://github.com/danielmiessler/SecLists
 RUN git clone https://github.com/danielmiessler/RobotsDisallowed
-RUN cd SecLists
-RUN tar xvzf rockyou.tar.gz
+RUN cd SecLists/Passwords/Leaked-Databases
+Run tar xvzf rockyou.txt.tar.gz
 
 # Set up DNS Tooling
 ### Building Aquatone
