@@ -6,19 +6,15 @@ FROM kalilinux/kali-linux-docker
 RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y
 
 # Install the Core
-RUN apt-get install sudo git wget curl git zip ccze byobu zsh golang  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra metasploit-framework dirb -y
+RUN apt-get install sudo git wget curl git zip ccze byobu zsh golang  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb -y
 
 # Make Directory Structure
-RUN mkdir /usr/share/wordlists
-RUN mkdir /usr/share/tools
-RUN mkdir /usr/share/tools/scripts/
+RUN mkdir /usr/share/wordlists && mkdir -p /usr/share/tools/scripts/
 
 # Pull Wordlists
-RUN cd /usr/share/wordlists/
-RUN git clone https://github.com/danielmiessler/SecLists
-RUN git clone https://github.com/danielmiessler/RobotsDisallowed
-RUN cd SecLists/Passwords/Leaked-Databases
-Run tar xvzf rockyou.txt.tar.gz
+RUN git clone https://github.com/danielmiessler/SecLists /usr/share/wordlists/seclists
+RUN git clone https://github.com/danielmiessler/RobotsDisallowed /usr/share/wordlists/robotsdisallowed
+RUN cd /usr/share/wordlists/seclists/Passwords/Leaked-Databases && tar xvzf rockyou.txt.tar.gz
 
 # Set up DNS Tooling
 ### Building Aquatone
@@ -69,56 +65,48 @@ RUN gem install aquatone
 
 # Clone down other DNS tooling
 RUN mkdir /usr/share/tools/DNS
-RUN cd /usr/share/tools/DNS
-RUN git clone https://github.com/lorenzog/dns-parallel-prober
-RUN git clone https://github.com/aboul3la/Sublist3r
-RUN git clone https://github.com/guelfoweb/knock
-RUN git clone https://github.com/anshumanbh/brutesubs
-RUN git clone https://github.com/jhaddix/domain
+RUN git clone https://github.com/lorenzog/dns-parallel-prober /usr/share/tools/DNS/dnsq
+RUN git clone https://github.com/aboul3la/Sublist3r /usr/share/tools/DNS/sublist3r
+RUN git clone https://github.com/guelfoweb/knock /usr/share/tools/DNS/knock
+RUN git clone https://github.com/anshumanbh/brutesubs /usr/share/tools/DNS/brutesubs
+RUN git clone https://github.com/jhaddix/domain /usr/share/tools/DNS/domain
 RUN apt-get install -f -y fierce
 
 # CMS Tooling
-RUN cd /usr/share/tools
-RUN mkdir CMS && cd CMS
-RUN git clone https://github.com/droope/droopescan
-RUN apt-get install -y wpscan
-RUN git clone https://github.com/Dionach/CMSmap
+RUN mkdir /usr/share/tools/CMS
+RUN git clone https://github.com/droope/droopescan /usr/share/tools/CMS/droopscan
+RUN apt-get install -y wpscan 
+RUN git clone https://github.com/Dionach/CMSmap /usr/share/tools/CMS/cmsmap
 
 # Directory Busting
-RUN cd /usr/share/tools
-RUN mkdir DirBusting && cd DirBusting
+RUN mkdir /usr/share/tools/DirBusting
 RUN apt-get install dirb -y
-RUN git clone https://github.com/OJ/gobuster
-RUN git clone https://github.com/henshin/filebuster
+RUN git clone https://github.com/OJ/gobuster /usr/share/tools/DirBusting/gobuster
+RUN git clone https://github.com/henshin/filebuster /usr/share/tools/DirBusting/filebuster
 
 # Git Recon
-RUN mkdir /usr/share/tools/git
-RUN cd /usr/share/tools/git
-RUN git clone https://github.com/libcrack/gitrecon
-RUN git clone https://github.com/dxa4481/truffleHog
-RUN git clone https://github.com/michenriksen/gitrob
+RUN mkdir /usr/share/tools/gitint
+RUN git clone https://github.com/libcrack/gitrecon /usr/share/tools/gitint/gitrecon
+RUN git clone https://github.com/dxa4481/truffleHog /usr/share/tools/gitint/trufflehog
+RUN git clone https://github.com/michenriksen/gitrob /usr/share/tools/gitint/gitrob
 
 
 # OSINT Tooling 
 RUN mkdir /usr/share/tools/OSINT
-RUN cd /usr/share/tools/OSINT
 RUN apt install -y recon-ng
-RUN git clone https://github.com/smicallef/spiderfoot
-RUN git clone https://github.com/ZephrFish/GoogD0rker
-RUN git clone https://github.com/GerbenJavado/LinkFinder 
+RUN git clone https://github.com/smicallef/spiderfoot /usr/share/tools/OSINT/spiderfoot
+RUN git clone https://github.com/ZephrFish/GoogD0rker /usr/share/tools/OSINT/googd0rk
+RUN git clone https://github.com/GerbenJavado/LinkFinder /usr/share/tools/OSINT/linkfinder
 
 # HTTP Analysis
 RUN mkdir /usr/share/tools/HTTPAnal
-RUN cd /usr/share/tools/HTTPAnal
-RUN git clone https://github.com/ChrisTruncer/EyeWitness 
-RUN git clone https://github.com/robertdavidgraham/masscan
+RUN git clone https://github.com/ChrisTruncer/EyeWitness /usr/share/tools/HTTPAnal/eyewitness
+RUN git clone https://github.com/robertdavidgraham/masscan /usr/share/tools/HTTPAnal/masscan
 
 # Optional
 # BBF Tooling (There will be some dupes SORRY!
-RUN mkdir /usr/share/tools/BBF
-RUN cd /usr/share/tools/BBF
+RUN mkdir /usr/share/tools/BBF && cd /usr/share/tools/BBF
 RUN for y in $(wget https://bugbountyforum.com/tools/ &&  grep "/tools/" index.html | cut -d "=" -f 2 | cut -d "/" -f 2,3 | grep -v ">"); do wget https://bugbountyforum.com/$y; done && for x in $(ls); do grep "href=" $x | cut -d "=" -f 2 | grep github.com | cut -d "/" -f 3,4,5 | cut -d " " -f 1 |sed -e 's/^"//' -e 's/"$//' | grep -v "gist" >> Repos.txt; done && for a in $(cat Repos.txt);do git clone https://$a; done && find . -maxdepth 1 -type f -delete
-
 RUN echo "That's all folks! You're good to go hack the planet!"
 
 # set to bash so you can set keys before running aquatone.
