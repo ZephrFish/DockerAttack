@@ -10,8 +10,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  golang \
  ccze \
  byobu \
- tar \
- metasploit-framework \
  gobuster \
  hashcat \
  hydra \
@@ -21,7 +19,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  nmap \
  yersinia \
  tshark \
- arp-scan \ 
+ arp-scan \
  ethtool \
  vlan \
  sqlmap \
@@ -32,31 +30,28 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  thc-ipv6 
 
 # Create known_hosts for git cloning
-RUN mkdir /root/.ssh/
-RUN touch /root/.ssh/known_hosts
+RUN mkdir /root/.ssh/ && touch /root/.ssh/known_hosts
+
 # Add host keys
 RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
 # Clone git repos
 # Set up folders for BR/Seg/Inf
-RUN mkdir /usr/share/tools/
-RUN mkdir /usr/share/tools/NetSeg/
-RUN git clone https://github.com/commonexploits/vlan-hopping /usr/share/tools/NetSeg/
+RUN mkdir -p /usr/share/tools/NetSeg/
+RUN git clone https://github.com/commonexploits/vlan-hopping /usr/share/tools/NetSeg/vlanhop
 RUN mkdir /usr/share/tools/BuildReview/
 RUN wget https://raw.githubusercontent.com/ZephrFish/RandomScripts/master/UbuntuBR.sh  -O /usr/share/tools/BuildReview/UbntBR.sh
 
 # Pull down prettifier scripts
 RUN mkdir /usr/share/tools/reporting
-RUN cd /usr/share/tools/reporting
-RUN git clone https://github.com/cornerpirate/ReportCompiler 
-RUN git clone https://github.com/cornerpirate/nmap-summariser 
+RUN git clone https://github.com/cornerpirate/ReportCompiler /usr/share/tools/reporting/rc
+RUN git clone https://github.com/cornerpirate/nmap-summariser /usr/share/tools/reporting/nmapsum
 
 # Wordlists
-RUN mkdir /usr/share/tools/wordlists/
-RUN cd /usr/share/tools/wordlists/
-RUN git clone https://github.com/danielmiessler/SecLists 
-RUN git clone https://github.com/danielmiessler/RobotsDisallowed  
+RUN git clone https://github.com/danielmiessler/SecLists /usr/share/wordlists/seclists
+RUN git clone https://github.com/danielmiessler/RobotsDisallowed /usr/share/wordlists/robotsdisallowed
+RUN cd /usr/share/wordlists/seclists/Passwords/Leaked-Databases && tar xvzf rockyou.txt.tar.gz
 
 # Set entrypoint and working directory
 WORKDIR /root/
