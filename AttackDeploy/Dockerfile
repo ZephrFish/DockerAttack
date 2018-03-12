@@ -3,10 +3,10 @@
 FROM kalilinux/kali-linux-docker
 
 # Update off the bat
-RUN apt update && apt-get upgrade -y && apt-get dist-upgrade -y
+RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y
 
 # Install the Core
-RUN apt install sudo git wget curl git zip ccze byobu zsh golang  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra metasploit-framework dirb -y
+RUN apt-get install sudo git wget curl git zip ccze byobu zsh golang  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra metasploit-framework dirb -y
 
 # Make Directory Structure
 RUN mkdir /usr/share/wordlists
@@ -75,19 +75,19 @@ RUN git clone https://github.com/aboul3la/Sublist3r
 RUN git clone https://github.com/guelfoweb/knock
 RUN git clone https://github.com/anshumanbh/brutesubs
 RUN git clone https://github.com/jhaddix/domain
-RUN apt install -f -y fierce
+RUN apt-get install -f -y fierce
 
 # CMS Tooling
 RUN cd /usr/share/tools
 RUN mkdir CMS && cd CMS
 RUN git clone https://github.com/droope/droopescan
-RUN apt install -y wpscan
+RUN apt-get install -y wpscan
 RUN git clone https://github.com/Dionach/CMSmap
 
 # Directory Busting
 RUN cd /usr/share/tools
 RUN mkdir DirBusting && cd DirBusting
-RUN apt install dirb -y
+RUN apt-get install dirb -y
 RUN git clone https://github.com/OJ/gobuster
 RUN git clone https://github.com/henshin/filebuster
 
