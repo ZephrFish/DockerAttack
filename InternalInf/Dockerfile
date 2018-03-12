@@ -17,8 +17,9 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get i
  wordlists
 
 # Making our tools dir
-RUN mkdir /usr/share/tools/
-RUN mkdir /usr/share/tools/RT
+RUN mkdir -p /usr/share/tools/RT
 RUN mkdir /usr/share/wordlists
 
-# 
+# Clone down some basic things
+RUN git clone https://github.com/lgandx/Responder /usr/share/tools/RT/responder
+
