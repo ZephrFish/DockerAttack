@@ -64,23 +64,23 @@ RUN chmod 777 /bin/aq
 RUN gem install aquatone
 
 # Clone down other DNS tooling
-RUN mkdir /usr/share/tools/DNS
+RUN mkdir -p /usr/share/tools/DNS
 RUN git clone https://github.com/lorenzog/dns-parallel-prober /usr/share/tools/DNS/dnsq
 RUN git clone https://github.com/aboul3la/Sublist3r /usr/share/tools/DNS/sublist3r
 RUN git clone https://github.com/guelfoweb/knock /usr/share/tools/DNS/knock
 RUN git clone https://github.com/anshumanbh/brutesubs /usr/share/tools/DNS/brutesubs
 RUN git clone https://github.com/jhaddix/domain /usr/share/tools/DNS/domain
-RUN apt-get install -f -y fierce
+RUN apt-get install  fierce -y || true
 
 # CMS Tooling
-RUN mkdir /usr/share/tools/CMS
+RUN mkdir -p /usr/share/tools/CMS
 RUN git clone https://github.com/droope/droopescan /usr/share/tools/CMS/droopscan
-RUN apt-get install -y wpscan 
+RUN apt-get install -y wpscan   || true
 RUN git clone https://github.com/Dionach/CMSmap /usr/share/tools/CMS/cmsmap
 
 # Directory Busting
-RUN mkdir /usr/share/tools/DirBusting
-RUN apt-get install dirb -y
+RUN mkdir -p /usr/share/tools/DirBusting
+RUN apt-get install dirb -y  || true
 RUN git clone https://github.com/OJ/gobuster /usr/share/tools/DirBusting/gobuster
 RUN git clone https://github.com/henshin/filebuster /usr/share/tools/DirBusting/filebuster
 
@@ -92,7 +92,7 @@ RUN git clone https://github.com/michenriksen/gitrob /usr/share/tools/gitint/git
 
 
 # OSINT Tooling 
-RUN mkdir /usr/share/tools/OSINT
+RUN mkdir -p /usr/share/tools/OSINT
 RUN apt install -y recon-ng
 RUN git clone https://github.com/smicallef/spiderfoot /usr/share/tools/OSINT/spiderfoot
 RUN git clone https://github.com/ZephrFish/GoogD0rker /usr/share/tools/OSINT/googd0rk
@@ -105,8 +105,9 @@ RUN git clone https://github.com/robertdavidgraham/masscan /usr/share/tools/HTTP
 
 # Optional
 # BBF Tooling (There will be some dupes SORRY!
-RUN mkdir /usr/share/tools/BBF && cd /usr/share/tools/BBF
-RUN for y in $(wget https://bugbountyforum.com/tools/ &&  grep "/tools/" index.html | cut -d "=" -f 2 | cut -d "/" -f 2,3 | grep -v ">"); do wget https://bugbountyforum.com/$y; done && for x in $(ls); do grep "href=" $x | cut -d "=" -f 2 | grep github.com | cut -d "/" -f 3,4,5 | cut -d " " -f 1 |sed -e 's/^"//' -e 's/"$//' | grep -v "gist" >> Repos.txt; done && for a in $(cat Repos.txt);do git clone https://$a; done && find . -maxdepth 1 -type f -delete
+RUN mkdir -p /usr/share/tools/BBF && \
+    cd /usr/share/tools/BBF && \
+    for y in $(wget https://bugbountyforum.com/tools/ &&  grep "/tools/" index.html | cut -d "=" -f 2 | cut -d "/" -f 2,3 | grep -v ">"); do wget https://bugbountyforum.com/$y; done && for x in $(ls); do grep "href=" $x | cut -d "=" -f 2 | grep github.com | cut -d "/" -f 3,4,5 | cut -d " " -f 1 |sed -e 's/^"//' -e 's/"$//' | grep -v "gist" >> Repos.txt; done && for a in $(cat Repos.txt);do git clone https://$a; done && find . -maxdepth 1 -type f -delete
 RUN echo "That's all folks! You're good to go hack the planet!"
 
 # set to bash so you can set keys before running aquatone.
