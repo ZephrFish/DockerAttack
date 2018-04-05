@@ -15,4 +15,14 @@ docker build -t dockerattack/attackdeploy $(pwd)/
 docker run -ti -p 80:80 -p 443:443 -p 8080:8080 -v /tmp/AttackDeploy:/home/AttackDeploy dockerattack/attackdeploy
 ```
 
+# Compose
 
+Use [`docker-compose`](https://github.com/docker/compose/releases/)
+to simplify this process and create a persistent `attackdeploy` container:
+
+```bash
+# pull & build images, create container
+docker-compose up --build --no-start attackdeploy
+# run container
+docker run -ai attackdeploy
+```

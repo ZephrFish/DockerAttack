@@ -1,0 +1,22 @@
+version: '3.2'
+services:
+ attackdeploy:
+  container_name: attackdeploy
+  image: dockerattack/attackdeploy:latest
+  build:
+   context: .
+   cache_from:  # compose-file>=3.2
+    - kalilinux/kali-linux-docker:latest
+    - dockerattack/attackdeploy:latest
+  ports:
+   - 80:80
+   - 443:443
+   - 8080:8080
+  stdin_open: true
+  tty: true
+  volumes:
+   - /tmp/AttackDeploy:/home/AttackDeploy
+   - /tmp/.X11-unix:/tmp/.X11-unix
+   - /tmp/.docker.xauth:/tmp/.docker.xauth
+  environment:
+   - DISPLAY
