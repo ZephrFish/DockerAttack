@@ -1,8 +1,8 @@
 # Kali
-FROM kalilinux/kali-linux-docker
+FROM kalilinux/kali-linux-docker:latest
 
-# Update and apt install programs
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get install -y \
+# Update and apt install programs. Don't dist-upgrade with docker.
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
  exploitdb \
  exploitdb-bin-sploits \
  git \
