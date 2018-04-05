@@ -1,12 +1,14 @@
 # Set up the basics 
 # Leverage Kali Base Image
-FROM kalilinux/kali-linux-docker
+FROM kalilinux/kali-linux-docker:latest
 
-# Update off the bat
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y
+# Update off the bat. Don't dist-upgrade in docker containers.
+RUN apt-get update && apt-get upgrade -y
 
 # Install the Core
-RUN apt-get install sudo git wget curl git zip ccze byobu zsh golang  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb -y
+RUN apt-get update && apt-get install -y \
+  sudo git wget curl git zip ccze byobu zsh golang \
+  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb
 
 # Make Directory Structure
 RUN mkdir /usr/share/wordlists && mkdir -p /usr/share/tools/scripts/
@@ -22,18 +24,18 @@ FROM ruby
 WORKDIR /
 
 # Prepare
-RUN apt-get update
-RUN apt-get dist-upgrade -y
+RUN apt-get update && apt-get upgrade -y
 
 # Install normal Packages needed
-RUN apt-get install -y -u apt-utils unzip nodejs wget curl jruby nano screen htop openssl git
+RUN apt-get update && apt-get install -y -u \
+  apt-utils unzip nodejs wget curl jruby nano screen htop openssl git
 
 # Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get update && apt-get install -y nodejs
 
 # Installing the packages needed to run Nightmare
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   xvfb \
   x11-xkb-utils \
   xfonts-100dpi \
