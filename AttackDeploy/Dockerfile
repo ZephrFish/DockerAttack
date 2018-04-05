@@ -2,7 +2,7 @@
 # Leverage Kali Base Image
 FROM kalilinux/kali-linux-docker:latest
 
-# Update off the bat. Don't dist-upgrade in docker containers.
+# Update off the bat. Don't dist-upgrade with docker.
 RUN apt-get update && apt-get upgrade -y
 
 # Install the Core
@@ -72,17 +72,17 @@ RUN git clone https://github.com/aboul3la/Sublist3r /usr/share/tools/DNS/sublist
 RUN git clone https://github.com/guelfoweb/knock /usr/share/tools/DNS/knock
 RUN git clone https://github.com/anshumanbh/brutesubs /usr/share/tools/DNS/brutesubs
 RUN git clone https://github.com/jhaddix/domain /usr/share/tools/DNS/domain
-RUN apt-get install  fierce -y || true
+RUN apt-get update && apt-get install -y fierce || true
 
 # CMS Tooling
 RUN mkdir -p /usr/share/tools/CMS
 RUN git clone https://github.com/droope/droopescan /usr/share/tools/CMS/droopscan
-RUN apt-get install -y wpscan   || true
+RUN apt-get update && apt-get install -y wpscan || true
 RUN git clone https://github.com/Dionach/CMSmap /usr/share/tools/CMS/cmsmap
 
 # Directory Busting
 RUN mkdir -p /usr/share/tools/DirBusting
-RUN apt-get install dirb -y  || true
+RUN apt-get update && apt-get install -y dirb || true
 RUN git clone https://github.com/OJ/gobuster /usr/share/tools/DirBusting/gobuster
 RUN git clone https://github.com/henshin/filebuster /usr/share/tools/DirBusting/filebuster
 
@@ -95,7 +95,7 @@ RUN git clone https://github.com/michenriksen/gitrob /usr/share/tools/gitint/git
 
 # OSINT Tooling 
 RUN mkdir -p /usr/share/tools/OSINT
-RUN apt install -y recon-ng
+RUN apt-get update && apt-get install -y recon-ng || true
 RUN git clone https://github.com/smicallef/spiderfoot /usr/share/tools/OSINT/spiderfoot
 RUN git clone https://github.com/ZephrFish/GoogD0rker /usr/share/tools/OSINT/googd0rk
 RUN git clone https://github.com/GerbenJavado/LinkFinder /usr/share/tools/OSINT/linkfinder
