@@ -11,7 +11,7 @@ docker build -t dockerattack/attackdeploy $(pwd)/
 # How to Run
 
 ```
-docker run -ti -p 80:80 -p 443:443 -p 8080:8080 -v /tmp/AttackDeploy:/home/AttackDeploy dockerattack/attackdeploy
+docker run -ti -v /tmp/AttackDeploy:/home/AttackDeploy dockerattack/attackdeploy
 ```
 
 
