@@ -1,12 +1,14 @@
 # Set up the basics 
 # Leverage Kali Base Image
-FROM kalilinux/kali-linux-docker
+FROM kalilinux/kali-linux-docker:latest
 
-# Update off the bat
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y
+# Update off the bat. Don't dist-upgrade with docker.
+RUN apt-get update && apt-get upgrade -y
 
 # Install the Core
-RUN apt-get install sudo git wget curl git zip ccze byobu zsh golang  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb -y
+RUN apt-get update && apt-get install -y \
+  sudo git wget curl git zip ccze byobu zsh golang \
+  ufw python-pip  nikto dotdotpwn jsql nmap sqlmap sqlninja thc-ipv6 hydra dirb
 
 # Make Directory Structure
 RUN mkdir /usr/share/wordlists && mkdir -p /usr/share/tools/scripts/
@@ -22,18 +24,18 @@ FROM ruby
 WORKDIR /
 
 # Prepare
-RUN apt-get update
-RUN apt-get dist-upgrade -y
+RUN apt-get update && apt-get upgrade -y
 
 # Install normal Packages needed
-RUN apt-get install -y -u apt-utils unzip nodejs wget curl jruby nano screen htop openssl git
+RUN apt-get update && apt-get install -y -u \
+  apt-utils unzip nodejs wget curl jruby nano screen htop openssl git
 
 # Install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get update && apt-get install -y nodejs
 
 # Installing the packages needed to run Nightmare
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
   xvfb \
   x11-xkb-utils \
   xfonts-100dpi \
@@ -70,17 +72,17 @@ RUN git clone https://github.com/aboul3la/Sublist3r /usr/share/tools/DNS/sublist
 RUN git clone https://github.com/guelfoweb/knock /usr/share/tools/DNS/knock
 RUN git clone https://github.com/anshumanbh/brutesubs /usr/share/tools/DNS/brutesubs
 RUN git clone https://github.com/jhaddix/domain /usr/share/tools/DNS/domain
-RUN apt-get install  fierce -y || true
+RUN apt-get update && apt-get install -y fierce || true
 
 # CMS Tooling
 RUN mkdir -p /usr/share/tools/CMS
 RUN git clone https://github.com/droope/droopescan /usr/share/tools/CMS/droopscan
-RUN apt-get install -y wpscan   || true
+RUN apt-get update && apt-get install -y wpscan || true
 RUN git clone https://github.com/Dionach/CMSmap /usr/share/tools/CMS/cmsmap
 
 # Directory Busting
 RUN mkdir -p /usr/share/tools/DirBusting
-RUN apt-get install dirb -y  || true
+RUN apt-get update && apt-get install -y dirb || true
 RUN git clone https://github.com/OJ/gobuster /usr/share/tools/DirBusting/gobuster
 RUN git clone https://github.com/henshin/filebuster /usr/share/tools/DirBusting/filebuster
 
@@ -93,7 +95,7 @@ RUN git clone https://github.com/michenriksen/gitrob /usr/share/tools/gitint/git
 
 # OSINT Tooling 
 RUN mkdir -p /usr/share/tools/OSINT
-RUN apt install -y recon-ng
+RUN apt-get update && apt-get install -y recon-ng || true
 RUN git clone https://github.com/smicallef/spiderfoot /usr/share/tools/OSINT/spiderfoot
 RUN git clone https://github.com/ZephrFish/GoogD0rker /usr/share/tools/OSINT/googd0rk
 RUN git clone https://github.com/GerbenJavado/LinkFinder /usr/share/tools/OSINT/linkfinder
